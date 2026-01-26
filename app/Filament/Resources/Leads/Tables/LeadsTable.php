@@ -2,13 +2,13 @@
 
 namespace App\Filament\Resources\Leads\Tables;
 
+use Filament\Actions\Action;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Actions\ForceDeleteBulkAction;
 use Filament\Actions\RestoreBulkAction;
 use Filament\Actions\ViewAction;
-use Filament\Tables\Actions\Action;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Columns\SelectColumn;
 use Filament\Tables\Filters\SelectFilter;
@@ -42,7 +42,7 @@ class LeadsTable
                     ->sortable(),
                 TextColumn::make('status')
                     ->badge()
-                    ->color(fn (string $state): string => match ($state) {
+                    ->color(fn(string $state): string => match ($state) {
                         'pending' => 'warning',
                         'approved' => 'success',
                         'rejected' => 'danger',
@@ -61,23 +61,23 @@ class LeadsTable
             ])
             ->recordActions([
                 Action::make('approve')
-                    ->action(fn ($record) => $record->update([
+                    ->action(fn($record) => $record->update([
                         'status' => 'approved',
                         'approved_at' => now(),
                     ]))
                     ->requiresConfirmation()
                     ->color('success')
                     ->icon('heroicon-o-check-circle')
-                    ->visible(fn ($record) => $record->status === 'pending'),
+                    ->visible(fn($record) => $record->status === 'pending'),
                 Action::make('reject')
-                    ->action(fn ($record) => $record->update([
+                    ->action(fn($record) => $record->update([
                         'status' => 'rejected',
                         'rejected_at' => now(),
                     ]))
                     ->requiresConfirmation()
                     ->color('danger')
                     ->icon('heroicon-o-x-circle')
-                    ->visible(fn ($record) => $record->status === 'pending'),
+                    ->visible(fn($record) => $record->status === 'pending'),
                 ViewAction::make(),
                 EditAction::make(),
             ])

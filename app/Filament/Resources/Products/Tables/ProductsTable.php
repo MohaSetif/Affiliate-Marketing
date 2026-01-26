@@ -30,7 +30,7 @@ class ProductsTable
                     ->sortable(),
                 TextColumn::make('commission_value')
                     ->label('Commission')
-                    ->formatStateUsing(fn ($state, $record) => $record->commission_type === 'fixed' ? "DZD {$state}" : "{$state}%")
+                    ->formatStateUsing(fn($state, $record) => $record->commission_type === 'fixed' ? "DZD {$state}" : "{$state}%")
                     ->sortable(),
                 IconColumn::make('is_active')
                     ->boolean()

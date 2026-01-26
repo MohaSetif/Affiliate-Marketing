@@ -2,11 +2,11 @@
 
 namespace App\Filament\Resources\AffiliateRequests\Tables;
 
+use Filament\Actions\Action;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Actions\ViewAction;
-use Filament\Tables\Actions\Action;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
@@ -32,7 +32,7 @@ class AffiliateRequestsTable
                     ->searchable(),
                 TextColumn::make('status')
                     ->badge()
-                    ->color(fn (string $state): string => match ($state) {
+                    ->color(fn(string $state): string => match ($state) {
                         'pending' => 'warning',
                         'approved' => 'success',
                         'rejected' => 'danger',
@@ -52,23 +52,23 @@ class AffiliateRequestsTable
             ])
             ->recordActions([
                 Action::make('approve')
-                    ->action(fn ($record) => $record->update([
+                    ->action(fn($record) => $record->update([
                         'status' => 'approved',
                         'reviewed_at' => now(),
                     ]))
                     ->requiresConfirmation()
                     ->color('success')
                     ->icon('heroicon-o-check-circle')
-                    ->visible(fn ($record) => $record->status === 'pending'),
+                    ->visible(fn($record) => $record->status === 'pending'),
                 Action::make('reject')
-                    ->action(fn ($record) => $record->update([
+                    ->action(fn($record) => $record->update([
                         'status' => 'rejected',
                         'reviewed_at' => now(),
                     ]))
                     ->requiresConfirmation()
                     ->color('danger')
                     ->icon('heroicon-o-x-circle')
-                    ->visible(fn ($record) => $record->status === 'pending'),
+                    ->visible(fn($record) => $record->status === 'pending'),
                 ViewAction::make(),
                 EditAction::make(),
             ])

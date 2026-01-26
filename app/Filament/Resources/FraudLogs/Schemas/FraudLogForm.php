@@ -4,8 +4,8 @@ namespace App\Filament\Resources\FraudLogs\Schemas;
 
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Textarea;
-use Filament\Forms\Components\Grid;
-use Filament\Forms\Components\Section;
+use Filament\Schemas\Components\Grid;
+use Filament\Schemas\Components\Section;
 use Filament\Forms\Components\Select;
 use Filament\Schemas\Schema;
 
@@ -42,7 +42,7 @@ class FraudLogForm
                         Textarea::make('payload')
                             ->columnSpanFull()
                             ->disabled()
-                            ->formatStateUsing(fn ($state) => is_array($state) ? json_encode($state, JSON_PRETTY_PRINT) : $state),
+                            ->formatStateUsing(fn($state) => is_array($state) ? json_encode($state, JSON_PRETTY_PRINT) : $state),
                     ]),
             ]);
     }

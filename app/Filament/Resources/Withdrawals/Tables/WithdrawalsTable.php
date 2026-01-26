@@ -2,13 +2,13 @@
 
 namespace App\Filament\Resources\Withdrawals\Tables;
 
+use Filament\Actions\Action;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Actions\ForceDeleteBulkAction;
 use Filament\Actions\RestoreBulkAction;
 use Filament\Actions\ViewAction;
-use Filament\Tables\Actions\Action;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Filters\TrashedFilter;
@@ -34,7 +34,7 @@ class WithdrawalsTable
                     ->badge(),
                 TextColumn::make('status')
                     ->badge()
-                    ->color(fn (string $state): string => match ($state) {
+                    ->color(fn(string $state): string => match ($state) {
                         'pending' => 'warning',
                         'approved' => 'info',
                         'paid' => 'success',
@@ -64,14 +64,14 @@ class WithdrawalsTable
             ->recordActions([
                 Action::make('mark_paid')
                     ->label('Mark as Paid')
-                    ->action(fn ($record) => $record->update([
+                    ->action(fn($record) => $record->update([
                         'status' => 'paid',
                         'processed_at' => now(),
                     ]))
                     ->requiresConfirmation()
                     ->color('success')
                     ->icon('heroicon-o-currency-dollar')
-                    ->visible(fn ($record) => $record->status === 'approved' || $record->status === 'pending'), // Usually Admin decides
+                    ->visible(fn($record) => $record->status === 'approved' || $record->status === 'pending'), // Usually Admin decides
                 ViewAction::make(),
                 EditAction::make(),
             ])

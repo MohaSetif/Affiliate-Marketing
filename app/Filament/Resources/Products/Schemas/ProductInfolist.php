@@ -3,10 +3,10 @@
 namespace App\Filament\Resources\Products\Schemas;
 
 use Filament\Infolists\Components\ImageEntry;
-use Filament\Infolists\Components\Section;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Infolists\Components\IconEntry;
-use Filament\Infolists\Components\Grid;
+use Filament\Schemas\Components\Grid;
+use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
 
 class ProductInfolist
@@ -37,7 +37,7 @@ class ProductInfolist
                                     ->badge(),
                                 TextEntry::make('commission_value')
                                     ->label('Value')
-                                    ->formatStateUsing(fn ($state, $record) => $record->commission_type === 'fixed' ? "DZD {$state}" : "{$state}%"),
+                                    ->formatStateUsing(fn($state, $record) => $record->commission_type === 'fixed' ? "DZD {$state}" : "{$state}%"),
                                 IconEntry::make('is_active')
                                     ->boolean()
                                     ->label('Active'),

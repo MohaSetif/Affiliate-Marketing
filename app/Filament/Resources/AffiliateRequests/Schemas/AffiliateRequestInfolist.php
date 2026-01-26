@@ -3,8 +3,8 @@
 namespace App\Filament\Resources\AffiliateRequests\Schemas;
 
 use Filament\Infolists\Components\TextEntry;
-use Filament\Infolists\Components\Section;
-use Filament\Infolists\Components\Grid;
+use Filament\Schemas\Components\Grid;
+use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
 
 class AffiliateRequestInfolist
@@ -25,7 +25,7 @@ class AffiliateRequestInfolist
                                     ->label('Merchant Company'),
                                 TextEntry::make('status')
                                     ->badge()
-                                    ->color(fn (string $state): string => match ($state) {
+                                    ->color(fn(string $state): string => match ($state) {
                                         'pending' => 'warning',
                                         'approved' => 'success',
                                         'rejected' => 'danger',

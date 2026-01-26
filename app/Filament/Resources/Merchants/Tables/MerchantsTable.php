@@ -2,13 +2,13 @@
 
 namespace App\Filament\Resources\Merchants\Tables;
 
+use Filament\Actions\Action;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Actions\ForceDeleteBulkAction;
 use Filament\Actions\RestoreBulkAction;
 use Filament\Actions\ViewAction;
-use Filament\Tables\Actions\Action;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\TrashedFilter;
 use Filament\Tables\Table;
@@ -32,8 +32,8 @@ class MerchantsTable
                     ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('status')
                     ->badge()
-                    ->state(fn ($record) => $record->approved_at ? 'Approved' : 'Pending')
-                    ->color(fn (string $state): string => match ($state) {
+                    ->state(fn($record) => $record->approved_at ? 'Approved' : 'Pending')
+                    ->color(fn(string $state): string => match ($state) {
                         'Approved' => 'success',
                         'Pending' => 'warning',
                     }),
@@ -51,11 +51,11 @@ class MerchantsTable
             ])
             ->recordActions([
                 Action::make('approve')
-                    ->action(fn ($record) => $record->update(['approved_at' => now()]))
+                    ->action(fn($record) => $record->update(['approved_at' => now()]))
                     ->requiresConfirmation()
                     ->color('success')
                     ->icon('heroicon-o-check-circle')
-                    ->visible(fn ($record) => !$record->approved_at),
+                    ->visible(fn($record) => !$record->approved_at),
                 ViewAction::make(),
                 EditAction::make(),
             ])

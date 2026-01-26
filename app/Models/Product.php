@@ -15,6 +15,7 @@ class Product extends Model
         'merchant_id',
         'title',
         'description',
+        'image',
         'commission_type',
         'commission_value',
         'is_active',
