@@ -3,6 +3,8 @@
 namespace App\Filament\Resources\Merchants\Schemas;
 
 use Filament\Forms\Components\DateTimePicker;
+use Filament\Forms\Components\Grid;
+use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Schema;
@@ -13,16 +15,27 @@ class MerchantForm
     {
         return $schema
             ->components([
-                Select::make('user_id')
-                    ->relationship('user', 'name')
-                    ->required(),
-                TextInput::make('company_name')
-                    ->required(),
-                TextInput::make('phone')
-                    ->tel()
-                    ->required(),
-                TextInput::make('whatsapp'),
-                DateTimePicker::make('approved_at'),
+                Section::make('Merchant Details')
+                    ->schema([
+                        Grid::make(2)
+                            ->schema([
+                                Select::make('user_id')
+                                    ->relationship('user', 'name')
+                                    ->required()
+                                    ->searchable(),
+                                TextInput::make('company_name')
+                                    ->required()
+                                    ->maxLength(255),
+                                TextInput::make('phone')
+                                    ->tel()
+                                    ->required(),
+                                TextInput::make('whatsapp')
+                                    ->tel(),
+                                DateTimePicker::make('approved_at')
+                                    ->disabled()
+                                    ->placeholder('Not yet approved'),
+                            ]),
+                    ]),
             ]);
     }
 }

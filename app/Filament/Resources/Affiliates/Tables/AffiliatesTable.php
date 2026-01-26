@@ -19,18 +19,23 @@ class AffiliatesTable
         return $table
             ->columns([
                 TextColumn::make('user.name')
-                    ->searchable(),
+                    ->label('Affiliate')
+                    ->searchable()
+                    ->sortable(),
                 TextColumn::make('referral_code')
-                    ->searchable(),
+                    ->copyable()
+                    ->searchable()
+                    ->sortable(),
+                TextColumn::make('leads_count')
+                    ->counts('leads')
+                    ->label('Total Leads')
+                    ->sortable(),
+                TextColumn::make('commissions_sum_amount')
+                    ->sum('commissions', 'amount')
+                    ->label('Total Earned')
+                    ->money('DZD')
+                    ->sortable(),
                 TextColumn::make('created_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                TextColumn::make('updated_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                TextColumn::make('deleted_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),

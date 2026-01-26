@@ -4,9 +4,9 @@ namespace App\Filament\Resources\FraudLogs\Tables;
 
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
-use Filament\Actions\EditAction;
 use Filament\Actions\ViewAction;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 
 class FraudLogsTable
@@ -15,33 +15,35 @@ class FraudLogsTable
     {
         return $table
             ->columns([
-                TextColumn::make('product_id')
-                    ->numeric()
+                TextColumn::make('created_at')
+                    ->dateTime()
+                    ->label('Attempted At')
                     ->sortable(),
-                TextColumn::make('affiliate_id')
-                    ->numeric()
-                    ->sortable(),
+                TextColumn::make('product.title')
+                    ->label('Target Product')
+                    ->searchable(),
+                TextColumn::make('affiliate.referral_code')
+                    ->label('Ref Code')
+                    ->placeholder('None'),
                 TextColumn::make('phone')
                     ->searchable(),
                 TextColumn::make('reason')
+                    ->badge()
+                    ->color('danger')
                     ->searchable(),
                 TextColumn::make('ip_address')
-                    ->searchable(),
-                TextColumn::make('created_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                TextColumn::make('updated_at')
-                    ->dateTime()
-                    ->sortable()
+                    ->label('IP')
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
-                //
+                SelectFilter::make('reason')
+                    ->options([
+                        'Duplicate phone number' => 'Duplicate Phone',
+                        'Invalid referral code' => 'Invalid Ref Code',
+                    ]),
             ])
             ->recordActions([
                 ViewAction::make(),
-                EditAction::make(),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([
