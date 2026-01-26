@@ -24,6 +24,8 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         $this->configureDefaults();
+
+        \App\Models\Lead::observe(\App\Observers\LeadObserver::class);
     }
 
     protected function configureDefaults(): void
